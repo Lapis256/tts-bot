@@ -10,6 +10,8 @@ class InteractionDataOption(BaseModel):
     name: str
     value: Optional[int] = None
     options: Optional[list[InteractionDataOption]] = []
+
+
 InteractionDataOption.update_forward_refs()
 
 

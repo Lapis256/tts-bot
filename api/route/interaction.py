@@ -2,12 +2,12 @@ from fastapi import APIRouter, Depends
 from fastapi.responses import JSONResponse
 
 from model.interaction import InteractionRequestData
-from verify import verify
+from util.verify import verify
 
 
 router = APIRouter(
-	prefix="/interactions",
-	dependencies=[Depends(verify)]
+    prefix="/interactions",
+    dependencies=[Depends(verify)]
 )
 
 
