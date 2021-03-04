@@ -1,36 +1,16 @@
 from fastapi import FastAPI
 
-import interaction
+from route.interaction import router as interaction_router
 
 app = FastAPI()
-app.include_router(interaction.router)
-
-clients = {}
+app.include_router(interaction_router)
 
 
 @app.get("/")
 async def get_root():
-    return { "Hello": "World" }
+    return {"Hello": "World"}
 
 
-
-
-# @app.websocket_route("/ws")
-# async def websocket(ws):
-#     await ws.accept()
-#     await ws.send_json( { "Hello": "World" })
-#     await ws.close(1000)
-    
-#     # key = ws.headers.get("sec-websocket-key")
-#     # clients[key] = ws
-    
-#     """
-#     try:
-#         while True:
-#             # data = await ws.recive_json()
-#             for client in clients.values():
-#                 await client.send_json({"a": "hello"})
-#     except WebSocketDisconnect:
-#         del clients[key]
-#         await ws.close()
-#     """
+@app.get("/ping")
+async def ping():
+    return "pong."
