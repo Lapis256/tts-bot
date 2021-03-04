@@ -1,0 +1,24 @@
+# This is a basic workflow to help you get started with Actions
+
+name: Deploy api directory to api branch
+
+# Controls when the action will run. 
+on:
+  # Triggers the workflow on push or pull request events but only for the main branch
+  push:
+    branches: [ main ]
+
+jobs:
+  deploy:
+    name: Deploy api directory to api branch
+    runs-on: ubuntu-latest    
+    steps:
+    - uses: actions/checkout@master
+
+    - name: Deploy
+      uses: s0/git-publish-subdir-action@develop
+      env:
+        REPO: self
+        BRANCH: api
+        FOLDER: api
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
