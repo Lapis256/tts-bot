@@ -1,26 +1,25 @@
-# from fastapi import APIRouter
+from fastapi import APIRouter, WebSocketDisconnect, WebSocket  # noqa
+
+from .utils.ws_client import Client
+from .utils.ws_manager import WSManager
+
+manager = WSManager()
+router = APIRouter()
 
 
-# clients = {}
-# router = APIRouter(prefix="/ws")
+@router.websocket("/ws")
+async def websocket(ws: WebSocket):
+    client = Client(ws)
+    await manager.connect(client)
+    await client.send({"type": 1})
+    data = await client.receive()
 
+    if data["type"] == 1:
+        client.set_id(data["id"])
 
-# @router.websocket_route("")
-# async def websocket(ws):
-#     await ws.accept()
-#     await ws.send_json( { "Hello": "World" })
-#     await ws.close(1000)
+    try:
+        while True:
+            await client.receive()
 
-#     # key = ws.headers.get("sec-websocket-key")
-#     # clients[key] = ws
-
-#     """
-#     try:
-#         while True:
-#             # data = await ws.recive_json()
-#             for client in clients.values():
-#                 await client.send_json({"a": "hello"})
-#     except WebSocketDisconnect:
-#         del clients[key]
-#         await ws.close()
-#     """
+    except WebSocketDisconnect:
+        manager.disconnect(client)
