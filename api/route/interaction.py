@@ -2,12 +2,12 @@ from fastapi import APIRouter, Depends
 from fastapi.responses import JSONResponse
 
 from model.interaction import InteractionRequestData
-from util.verify import verify
+from util.verify import discord_verify
 
 
 router = APIRouter(
     prefix="/interactions",
-    dependencies=[Depends(verify)]
+    dependencies=[Depends(discord_verify)]
 )
 
 

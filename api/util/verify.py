@@ -9,7 +9,7 @@ from nacl.exceptions import BadSignatureError
 PUBLIC_KEY = environ["PUBLIC_KEY"]
 
 
-async def verify(
+async def discord_verify(
     request: Request,
     x_signature_ed25519: Optional[str] = Header(None),
     x_signature_timestamp: Optional[str] = Header(None)
@@ -23,3 +23,7 @@ async def verify(
         )
     except BadSignatureError:
         raise HTTPException(status_code=401)
+
+
+async def api_verify():
+    ...

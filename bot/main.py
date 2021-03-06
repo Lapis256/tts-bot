@@ -1,11 +1,23 @@
-from discord import client
-import os
-import dotenv
+import asyncio
 
-from client import ttsClient
+
+from tts.client import ttsClient
+from config import TOKEN
+
+try:
+    import uvloop
+except ImportError:
+    pass
+else:
+    asyncio.set_event_loop_policy(uvloop.EventLoopPolicy())
 
 
 client = ttsClient()
 
-dotenv.load_dotenv()
-client.run(os.environ["TOKEN"])
+
+@client.event
+async def on_ready():
+    print("ready")
+
+
+client.run(TOKEN)

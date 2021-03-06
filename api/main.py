@@ -1,13 +1,6 @@
-from fastapi import FastAPI
+from app import create_app
 
-from route.interaction import router as interaction_router
-
-app = FastAPI(
-    openapi_url=None,
-    docs_url=None,
-    redoc_url=None
-)
-app.include_router(interaction_router)
+app = create_app()
 
 
 @app.get("/")
