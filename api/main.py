@@ -4,7 +4,7 @@ app = create_app()
 
 
 @app.get("/")
-async def get_root():
+async def root():
     return {"Hello": "World"}
 
 
